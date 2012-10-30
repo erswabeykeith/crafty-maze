@@ -22,6 +22,7 @@ window.onload = function () {
     Crafty.background('rgb(230,230,230)');
 
     function dfsSearch(startCell, endCell) {
+        Crafty.trigger('DFSStarted', null);
         var currentCell = startCell,
             neighborCell,
             stack = [],
@@ -29,7 +30,6 @@ window.onload = function () {
             stackPopped = false,
             found = false;
         currentCell.visited = true;
-        Crafty.trigger('DFSStarted', null);
         while (!found) {
             neighbors = currentCell.getAttachedNeighbors();
             if (neighbors.length) {
@@ -62,11 +62,11 @@ window.onload = function () {
 
     click = function (event) {
         // on click, use dfs to search our maze
-        var stack = dfsSearch(startCell, this);
+        var stack = dfsSearch(startCell, this),
+            neighbor;
         if (stack.length) {
             startCell = stack.shift();
             startCell.drawStartNode();
-            var neighbor;
             while (stack.length) {
                 neighbor = stack.shift();
                 startCell.connectNeighbor(neighbor);
@@ -75,7 +75,6 @@ window.onload = function () {
             }
             neighbor.drawEndNode();
         }
-        Crafty.trigger('DrawWalls', null);
     };
     // build the grid for our DFS and rendering
     for (y = 0; y < yCount; y++) {
@@ -85,14 +84,7 @@ window.onload = function () {
             id = x * y + y;
             cell = Crafty.e("2D, Mouse, Cell")
                 .attr({id: id, x: x * radius, y:  y * radius})
-                .areaMap([0, 0], [radius, 0], [radius, radius], [0, radius])
-                .bind('MouseDown', click)
-                .bind('DFSStarted', function () {
-                    this.visited = false;
-                })
-                .bind('DrawWalls', function () {
-                    this.drawWalls();
-                });
+                .bind('MouseDown', click);
             currentRow.push(cell);
             grid.push(cell);
             if (previousCell !== false) {
@@ -144,5 +136,7 @@ window.onload = function () {
         }
     }
     dfsCreate(grid[Math.floor(Math.random() * grid.length)]);
-    Crafty.trigger('DrawWalls', null);
+    for (g = 0; g < grid.length; g++) {
+        grid[g].drawWalls();
+    }
 };

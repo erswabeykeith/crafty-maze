@@ -21,6 +21,10 @@
             this.neighbors         = [];
             this.attachedNeighbors = [];
             this.visited           = false;
+            this.bind('DFSStarted', function () {
+                this.visited = false;
+            });
+            this.areaMap([0, 0], [radius, 0], [radius, radius], [0, radius]);
         },
         addNeighbor: function (cell) {
             this.neighbors.push(cell);
@@ -60,39 +64,26 @@
             this.attachedNeighbors.push(cell);
         },
         drawWalls: function () {
-            // NOTE: some performance gains can be had here by preventing double rendering of the same wall.
             // create the walls that have not been disabled
             if (this.left) {
                 this.walls.left = Crafty.e("2D, Canvas, Color")
                     .color(this.color)
-                    .attr({x: this.x + wallWidth, y: this.y, w: wallWidth, h: radius})
-                    .bind('DFSCompleted', function () {
-                        this.destroy();
-                    });
+                    .attr({x: this.x + wallWidth, y: this.y, w: wallWidth, h: radius});
             }
             if (this.top) {
                 this.walls.top = Crafty.e("2D, Canvas, Color")
                     .color(this.color)
                     .attr({x: this.x, y: this.y + wallWidth, w: radius, h: wallWidth})
-                    .bind('DFSCompleted', function () {
-                        this.destroy();
-                    });
             }
             if (this.right) {
                 this.walls.right = Crafty.e("2D, Canvas, Color")
                     .color(this.color)
-                    .attr({x: this.x + radius - wallWidth, y: this.y, w: wallWidth, h: radius})
-                    .bind('DFSCompleted', function () {
-                        this.destroy();
-                    });
+                    .attr({x: this.x + radius - wallWidth, y: this.y, w: wallWidth, h: radius});
             }
             if (this.bottom) {
                 this.walls.bottom = Crafty.e("2D, Canvas, Color")
                     .color(this.color)
-                    .attr({x: this.x, y: this.y + radius - wallWidth, w: radius, h: wallWidth})
-                    .bind('DFSCompleted', function () {
-                        this.destroy();
-                    });
+                    .attr({x: this.x, y: this.y + radius - wallWidth, w: radius, h: wallWidth});
             }
         },
         connectNeighbor: function (neighbor) {
