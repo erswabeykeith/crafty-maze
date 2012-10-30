@@ -65,19 +65,18 @@ window.onload = function () {
 
     click = function (event) {
         // on click, use dfs to search our maze
-        var stack = dfsSearch(startCell, this);
-        startCell = stack.pop();
-//        if (stack.length) {
-//            startCell = stack.shift();
-//            startCell.drawStartNode();
-//            while (stack.length) {
-//                neighbor = stack.shift();
-//                startCell.connectNeighbor(neighbor);
-//                neighbor.connectNeighbor(startCell);
-//                startCell = neighbor;
-//            }
-//            neighbor.drawEndNode();
-//        }
+        var stack = dfsSearch(startCell, this),
+            neighbor;
+        if (stack.length) {
+            startCell = stack.shift();
+            while (stack.length) {
+                neighbor = stack.shift();
+                Crafty.e("Trail")
+                    .attr({slow: false, trailColor: 'rgb(0,0,255)'})
+                    .connectNodes(startCell, neighbor);
+                startCell = neighbor;
+            }
+        }
     };
     // build the grid for our DFS and rendering
     for (y = 0; y < yCount; y++) {

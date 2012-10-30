@@ -2,6 +2,8 @@
     "use strict";
     var timeout = 0;
     Crafty.c("Trail", {
+        slow: true,
+        trailColor: 'rgb(255,0,0)',
         init: function () {
             this.requires("2D, Canvas, Color");
         },
@@ -24,13 +26,14 @@
             if (start.y < end.y) {
                 height = start.radius;
             }
-            timeout += 25;
+            if (this.slow) {
+                timeout += 25;
+            }
             var t = setTimeout(function () {
-                this.color('rgb(255,0,0)')
+                this.color(this.trailColor)
                     .attr({x: centerX, y: centerY, w: width, h: height})
                     .bind('DFSStarted', function () {
                         this.destroy();
-                        timeout = 0;
                     });
             }.bind(this), timeout);
             this.bind('DFSStarted', function () {
