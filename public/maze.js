@@ -63,7 +63,7 @@ window.onload = function () {
         return stack;
     }
 
-    click = function (event) {
+    click = function () {
         // on click, use dfs to search our maze
         var stack = dfsSearch(startCell, this),
             neighbor;

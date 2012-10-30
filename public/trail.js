@@ -11,7 +11,8 @@
             var centerX = start.x + (start.radius / 2),
                 centerY = start.y + (start.radius / 2),
                 width = 3,
-                height = 3;
+                height = 3,
+                t;
             if (start.x > end.x) {
                 width = start.radius;
                 centerX = centerX - start.radius;
@@ -29,7 +30,7 @@
             if (this.slow) {
                 timeout += 25;
             }
-            var t = setTimeout(function () {
+            t = setTimeout(function () {
                 this.color(this.trailColor)
                     .attr({x: centerX, y: centerY, w: width, h: height})
                     .bind('DFSStarted', function () {
