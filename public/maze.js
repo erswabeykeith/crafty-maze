@@ -1,11 +1,11 @@
 window.onload = function () {
     "use strict";
-    var width = 1024,
-        height = 768,
+    var width = 1000,
+        height = 730,
         radius = 32,
         wallWidth = 0.5,
-        xCount = width / radius,
-        yCount = height / radius,
+        xCount = Math.floor(width / radius),
+        yCount = Math.floor(height / radius),
         x,
         y,
         id = 0,
@@ -204,7 +204,6 @@ window.onload = function () {
         // on click, use dfs to search our maze
         var stack = dfsSearch(startCell, this);
         if (stack.length) {
-            stack.shift();
             startCell = stack.shift();
             startCell.drawStartNode();
             var neighbor;
@@ -241,7 +240,7 @@ window.onload = function () {
                 cell.addNeighbor(previousCell);
             }
             // set our initial start cell to the center of the maze
-            if (yCount / 2 === y && xCount / 2 === x) {
+            if (Math.floor(yCount / 2) === y && Math.floor(xCount / 2) === x) {
                 startCell = cell;
             }
             previousCell = cell;
