@@ -1,8 +1,8 @@
 window.onload = function () {
     "use strict";
-    var width = 1000,
-        height = 730,
-        radius = 32,
+    var width = 800,
+        height = 600,
+        radius = 16,
         xCount = Math.floor(width / radius),
         yCount = Math.floor(height / radius),
         x,
