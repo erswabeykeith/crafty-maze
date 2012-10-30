@@ -6,6 +6,7 @@
     // our Cell component. Consists of four walls, positional information, and
     // information needed for DFS
     Crafty.c("Cell", {
+        radius: radius,
         init: function () {
             // randomly generate a cell color.
             // prevent it from being close to the same color as the background (230)
@@ -86,40 +87,6 @@
                     .color(this.color)
                     .attr({x: this.x, y: this.y + radius - wallWidth, w: radius, h: wallWidth});
             }
-        },
-        connectNeighbor: function (neighbor) {
-            var centerX = this.x + (radius / 2),
-                centerY = this.y + (radius / 2),
-                width = 3,
-                height = 3;
-            if (this.x > neighbor.x) {
-                width = radius;
-                centerX = centerX - radius;
-            }
-            if (this.x < neighbor.x) {
-                width = radius;
-            }
-            if (this.y > neighbor.y) {
-                height = radius;
-                centerY = centerY - radius;
-            }
-            if (this.y < neighbor.y) {
-                height = radius;
-            }
-            timeout += 10;
-            var t = setTimeout(function () {
-                Crafty.e("2D, Canvas, Color")
-                    .color('rgb(255,0,0)')
-                    .attr({x: centerX, y: centerY, w: width, h: height})
-                    .bind('DFSStarted', function () {
-                        this.destroy();
-                        timeout = 0;
-                    });
-            }.bind(this), timeout);
-            this.bind('DFSStarted', function () {
-                clearTimeout(t);
-                timeout = 0;
-            });
         },
         drawNode: function (color) {
             var width = radius / 2,

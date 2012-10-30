@@ -40,8 +40,7 @@ window.onload = function () {
                 // get a random neighbor cell
                 neighborCell = neighbors[Math.floor(Math.random() * neighbors.length)];
                 neighborCell.visited = true;
-                currentCell.connectNeighbor(neighborCell);
-                neighborCell.connectNeighbor(currentCell);
+                Crafty.e("Trail").connectNodes(currentCell, neighborCell);
                 // update our current cell to be the newly selected cell
                 currentCell = neighborCell;
                 stackPopped = false;
