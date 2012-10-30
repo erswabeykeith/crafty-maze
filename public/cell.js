@@ -1,7 +1,8 @@
 (function (Crafty) {
     "use strict";
     var wallWidth = 0.5,
-        radius = 32;
+        radius = 32,
+        timeout = 0;
     // our Cell component. Consists of four walls, positional information, and
     // information needed for DFS
     Crafty.c("Cell", {
@@ -73,7 +74,7 @@
             if (this.top) {
                 this.walls.top = Crafty.e("2D, Canvas, Color")
                     .color(this.color)
-                    .attr({x: this.x, y: this.y + wallWidth, w: radius, h: wallWidth})
+                    .attr({x: this.x, y: this.y + wallWidth, w: radius, h: wallWidth});
             }
             if (this.right) {
                 this.walls.right = Crafty.e("2D, Canvas, Color")
@@ -105,12 +106,20 @@
             if (this.y < neighbor.y) {
                 height = radius;
             }
-            Crafty.e("2D, Canvas, Color")
-                .color('rgb(255,0,0)')
-                .attr({x: centerX, y: centerY, w: width, h: height})
-                .bind('DFSStarted', function () {
-                    this.destroy();
-                });
+            timeout += 10;
+            var t = setTimeout(function () {
+                Crafty.e("2D, Canvas, Color")
+                    .color('rgb(255,0,0)')
+                    .attr({x: centerX, y: centerY, w: width, h: height})
+                    .bind('DFSStarted', function () {
+                        this.destroy();
+                        timeout = 0;
+                    });
+            }.bind(this), timeout);
+            this.bind('DFSStarted', function () {
+                clearTimeout(t);
+                timeout = 0;
+            });
         },
         drawNode: function (color) {
             var width = radius / 2,
