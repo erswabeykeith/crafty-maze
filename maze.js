@@ -1,5 +1,5 @@
-window.onload = function () {
-    "use strict";
+window.onload = function () {  //run the function when the window is loaded
+    "use strict";              //the function will set up the startcell
     var width = 800,
         height = 600,
         radius = 16,
@@ -18,8 +18,8 @@ window.onload = function () {
         startCell,
         click;
 
-    Crafty.init(width, height);
-    Crafty.background('rgb(230,230,230)');
+    Crafty.init(width, height);  //Initialize crafty to use bootstrap
+    Crafty.background('rgb(230,230,230)'); // use crafty to create a light grey background element
 
     function dfsSearch(startCell, endCell) {
         Crafty.trigger('DFSStarted', null);
@@ -84,15 +84,16 @@ window.onload = function () {
         currentRow = [];
         for (x = 0; x < xCount; x++) {
             id = x * y + y;
-            cell = Crafty.e("2D, Mouse, Cell")
+            cell = Crafty.e("2D, Mouse, Cell") //cell is equal to these elements
                 .attr({id: id, x: x * radius, y:  y * radius})
-                .bind('MouseDown', click);
+                .bind('MouseDown', click); //activates when mousebutton is pushed
             currentRow.push(cell);
             grid.push(cell);
             if (previousCell !== false) {
                 previousCell.addNeighbor(cell);
                 cell.addNeighbor(previousCell);
             }
+
             // set our initial start cell to the center of the maze
             if (Math.floor(yCount / 2) === y && Math.floor(xCount / 2) === x) {
                 startCell = cell;
@@ -109,7 +110,9 @@ window.onload = function () {
         // clear previous cell to prevent wrapped neighbors
         previousCell = false;
     }
-
+    //Have a chance for a monster to appear in on of the cells when it is created
+    //The monster would then move randomly around the maze until killed.
+    //Would need a function for moster movement/direction, as well as a way to remove it when it gets killed
     // use dfs to create our maze
     function dfsCreate(startCell) {
         var currentCell = startCell,

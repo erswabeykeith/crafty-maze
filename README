@@ -1,1 +1,8 @@
-Hello, World of the Craftyjs component entity game framework. 
+Hello, World of the Craftyjs component entity game framework.
+
+Liz's edits/comments on how to make the "Hello World" maze better
+After doing some research and going through the code, I have made the following conclusions:
+-Earlier, I said I could use a prototype to build objects for my game design, but after doing some research, I wouldn't need to use prototypes if I was using crafty.js because it is an Entity Component System and the entities (or sprites) are built of reusable components, eliminating the need for prototypes.
+-It looks like the "trail" is just a line moving through the maze, but it would be more interesting if it were a character or "sprite". You could find an image of a basic dungeon character online and link that picture in and then add movement to it!
+-As far as I can tell, you can only move through the maze with a mouse, which as a gamer, drives me crazy! Adding key bindings with a keydown element would be great for people like me who hate using the mouse.
+-Again, adding treasures (or enemies) would be cool. They would be added in a similar way that the sprite is added only the would be added to the cells. Enemies would need to be animated and move randomly (and disappear when killed) and the treasures would need to be removed once they were acquired. 
